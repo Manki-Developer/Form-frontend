@@ -1,0 +1,56 @@
+.Thread-main {
+    height: 10rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 2px solid #eee;
+    padding: 40px 0px;
+}
+
+.Title-thread{
+    flex: 2;
+    margin: 0px 20px;
+}
+
+.thread-info{
+    flex: 1;
+    justify-content: center;
+    margin-left: 30px;
+}
+
+.thread-count{
+    display: flex;
+}
+
+.post-count{
+    display: flex;
+}
+
+.profile-info{
+    flex: 2;
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-info-picture {
+    width: 80px;
+    height: 80px;
+    margin-left: 50px;
+}
+
+.recent-post-wrapper{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.recent-thread-name{
+    display: flex;
+    flex-direction: row;
+}
+
+.recent-user-post-profile-name{
+    display: flex;
+    flex-direction: row;
+}
