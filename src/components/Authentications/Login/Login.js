@@ -3,15 +3,35 @@ import Card from "../../UIElements/Card/Card";
 import Input from "../../FormElements/Input/Input";
 import Button from "../../FormElements/Button/Button";
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from "../../../util/validators";
+import { useForm } from "../../../hooks/form-hook";
 
 import "./Login.css";
 
-const login = (props) => {
+const Login = (props) => {
+  const [formState, inputHandler] = useForm(
+    {
+      email: {
+        value: "",
+        isValid: false,
+      },
+      password: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false
+  );
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(formState);
+  }
+
   return (
-    <Card className="loginCard">
+    <Card className="loginCard" keyVal="loginC">
       <h2>Login</h2>
       <hr />
-      <form>
+      <form onSubmit={submitHandler}>
         <Input
           id="email"
           type="text"
@@ -19,7 +39,7 @@ const login = (props) => {
           label="Email"
           validators={[VALIDATOR_EMAIL()]}
           errorText="Please enter a valid email."
-          //   onInput={inputHandler}
+          onInput={inputHandler}
         />
         <Input
           id="password"
@@ -28,17 +48,20 @@ const login = (props) => {
           label="Password"
           validators={[VALIDATOR_MINLENGTH(6)]}
           errorText="Please enter a valid password."
-          //   onInput={inputHandler}
+          onInput={inputHandler}
         />
-        <Button type="submit" size={25}>
+        <Button type="submit" size={25} disabled={!formState.isValid}>
           LOG IN
         </Button>
       </form>
-      <button className="switchButton" onClick={() => props.handleChange("event", 1)}>
+      <button
+        className="switchButton"
+        onClick={() => props.handleChange("event", 1)}
+      >
         Don't have an account yet? Create one
       </button>
     </Card>
   );
 };
 
-export default login;
+export default Login;
