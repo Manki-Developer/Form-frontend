@@ -54,7 +54,7 @@ function Input(props) {
 
   return (
     <div
-      className={`form-control ${
+      className={`form-control-custom ${
         !inputState.isValid && inputState.isTouched && "form-control--invalid"
       }`}
     >
