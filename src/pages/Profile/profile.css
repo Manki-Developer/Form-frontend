@@ -1,0 +1,73 @@
+.profile-grid {
+    display: grid;
+    grid-template-areas:
+        'top top'
+        'about about'
+        'exp edu'
+        'github github';
+    grid-gap: 1rem;
+}
+
+.post-container{
+    padding: 20px 100px;
+}
+
+.my-1 {
+    margin: 1rem 0;
+}
+
+.profile-top {
+    grid-area: top;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.btn-primary, .bg-primary, .badge-primary, .alert-primary {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.p-2 {
+    padding: 2rem;
+}
+
+.large {
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.profile-top img {
+    width: 250px;
+}
+
+.round-img {
+    border-radius: 50%;
+}
+
+.my-1 {
+    margin: 1rem 0;
+}
+
+.lead {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.profile-usertag{
+    display:flex;
+    flex-direction: row;
+}
+
+.profile-number-post{
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-number-post p{
+    margin-left: 10px;
+}

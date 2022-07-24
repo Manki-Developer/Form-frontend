@@ -4,6 +4,7 @@ import Authentication from "./pages/Authentication/Authentication";
 import Dashboard from './pages/Dashboard/Dashboard';
 import MainNavigation from "./components/Navigations/MainNavigation/MainNavigation";
 import Reply from "./pages/Reply/Reply";
+import Profile from "./pages/Profile/profile";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     { path: "/user/login", Element: <Authentication /> },
     { path: "/dashboard", Element: <Dashboard /> },
     { path: "/reply/:threadId", Element: <Reply /> },
+    { path: "/profile/:userId", Element: <Profile /> },
     { path: "*", Element: <Dashboard /> },
   ];
 
