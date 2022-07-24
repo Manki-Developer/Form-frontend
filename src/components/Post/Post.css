@@ -1,0 +1,107 @@
+:root {
+    --primary-color: #17a2b8;
+    --dark-color: #343a40;
+    --light-color: #f4f4f4;
+    --danger-color: #dc3545;
+    --success-color: #28a745;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.bg-white,
+.badge-white,
+.alert-white {
+    background: #fff;
+    color: #333;
+    border: #ccc solid 1px;
+}
+
+.post-profile{
+    padding: 5px;
+}
+
+.fa, .fab, .fal, .far, .fas {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
+
+.likes-button{
+    display: flex;
+    flex-direction: row;
+}
+
+.likes-button span{
+    margin-left: 5px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.4rem 1.3rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    transition: opacity 0.2s ease-in;
+    outline: none;
+}
+
+.post-form .post-form-header {
+    background: var(--primary-color);
+    padding: 0.5rem;
+}
+
+.post {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    align-items: center;
+}
+
+
+.post>div:first-child {
+    text-align: center;
+}
+
+.post img {
+    width: 150px;
+}
+
+.post .comment-count {
+    background: var(--light-color);
+    color: var(--primary-color);
+    padding: 0.1rem 0.2rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+
+.post .post-date {
+    color: #aaa;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.p-1 {
+    padding: 1rem;
+}
+
+.my-1 {
+    margin: 1rem 0;
+}
+
+a {
+    color: var(--dark-color);
+    text-decoration: none;
+}
+
+.round-img {
+    border-radius: 50%;
+}

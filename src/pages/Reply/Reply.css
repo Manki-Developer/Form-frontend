@@ -1,0 +1,60 @@
+.post-section{
+    width: 100%;
+    display: block;
+    padding: 30px 120px;
+}
+
+.profile-information{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.post-form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.post-main{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: #ccc solid 1px;
+    padding: 20px;
+}
+
+.profile-picture {
+    height: 150px;
+    width: 150px;
+    margin: 0px 20px;
+}
+
+.submit-button{
+    width: 150px;
+}
+
+.post-decor{
+    background-color: #17a2b8;
+    padding: 8px;
+}
+
+.post-decor h3{
+    color: white;
+}
+
+.post-description{
+    flex: 5;
+}
+
+.edit-description{
+    color: #666;
+    font-size: 20px;
+}
+
+.profile-username{
+    display:flex;
+    flex-direction: row;
+}

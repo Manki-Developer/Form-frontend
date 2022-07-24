@@ -1,16 +1,35 @@
 .Thread-main {
-    height: 10rem;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     border: 2px solid #eee;
-    padding: 40px 0px;
+    padding: 15px 0px;
+    margin-bottom: 20px;
+    position: relative;
 }
 
 .Title-thread{
-    flex: 2;
+    flex: 6;
     margin: 0px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Announcement-button{
+    background-color: white;
+    border: 0px solid white;
+    color: black;
+    text-align: left;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.Announcement-button p{
+    font-weight: lighter;
+    font-weight: 18px;
 }
 
 .thread-info{
@@ -28,21 +47,21 @@
 }
 
 .profile-info{
-    flex: 2;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .profile-info-picture {
-    width: 80px;
-    height: 80px;
-    margin-left: 50px;
+    width: 100px;
+    height: 100px;
+    margin: auto;
 }
 
 .recent-post-wrapper{
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
+    padding: 5px;
+    text-align: center;
 }
 
 .recent-thread-name{
@@ -53,4 +72,28 @@
 .recent-user-post-profile-name{
     display: flex;
     flex-direction: row;
+}
+
+.threadDesc{
+    font-family: "Varela Round", sans-serif;
+    font-size: 16px;
+    color: #444;
+    line-height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.number-posts{
+    position: absolute;
+    display: flex;
+    bottom: 0px;
+    right: 20px;
+    flex-direction: row;
+}
+
+.number-posts p {
+    margin-left: 5px;
 }

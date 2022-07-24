@@ -3,6 +3,7 @@ import "./App.css";
 import Authentication from "./pages/Authentication/Authentication";
 import Dashboard from './pages/Dashboard/Dashboard';
 import MainNavigation from "./components/Navigations/MainNavigation/MainNavigation";
+import Reply from "./pages/Reply/Reply";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
   const ROUTE_TO_PAGES = [
     { path: "/user/login", Element: <Authentication /> },
     { path: "/dashboard", Element: <Dashboard /> },
-    { path: "*", Element: <Authentication /> },
+    { path: "/reply/:threadId", Element: <Reply /> },
+    { path: "*", Element: <Dashboard /> },
   ];
 
   //For now, don't changed the code below
