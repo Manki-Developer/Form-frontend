@@ -15,11 +15,11 @@ import "./Signup.css";
 const Signup = (props) => {
   const [formState, inputHandler] = useForm(
     {
-      firstName: {
+      username: {
         value: "",
         isValid: false,
       },
-      lastName: {
+      name: {
         value: "",
         isValid: false,
       },
@@ -50,21 +50,21 @@ const Signup = (props) => {
       <hr />
       <form onSubmit={submitHandler}>
         <Input
-          id="firstName"
+          id="username"
           type="text"
           element="input"
-          label="First Name"
+          label="Username"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter your first name."
+          errorText="Please enter your username."
           onInput={inputHandler}
         />
         <Input
-          id="lastName"
+          id="name"
           type="text"
           element="input"
-          label="Last Name"
+          label="Name"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter your last name."
+          errorText="Please enter your name."
           onInput={inputHandler}
         />
         <Input

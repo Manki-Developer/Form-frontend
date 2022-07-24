@@ -24,14 +24,14 @@
 }
 
 .button--register {
-    background: #2cdb00;
-    border-color: #2cdb00;
+    background: #343a40;
+    border-color: #343a40;
 }
 
 .button--register:hover,
 .button--register:active {
-    background: #85ff6c;
-    border-color: #85ff6c;
+    background: #52585e;
+    border-color: #52585e;
 }
 
 .button--inverse {
