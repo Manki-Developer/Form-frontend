@@ -51,6 +51,28 @@ function Input(props) {
       type: "TOUCH",
     });
   };
+  
+  const element =
+    props.element === "input" ? (
+      <input
+        id={props.id}
+        type={props.type}
+        placeholder={props.placeholder}
+        onChange={changeHandler}
+        onBlur={touchHandler}
+        value={inputState.value}
+      />
+    ) : (
+      <textarea
+        id={props.id}
+        rows={props.rows || 3}
+        placeholder={props.placeholder}
+        onChange={changeHandler}
+        onBlur={touchHandler}
+        value={inputState.value}
+        style={{fontSize: 20}}
+      />
+    );
 
   return (
     <div
@@ -59,17 +81,7 @@ function Input(props) {
       }`}
     >
       <label htmlFor={props.id}>{props.label}</label>
-      <div className="input-control">
-        <input
-          id={props.id}
-          type={props.type}
-          placeholder={props.placeholder}
-          onChange={changeHandler}
-          onBlur={touchHandler}
-          pattern={props.pattern}
-          value={inputState.value}
-        />
-      </div>
+      <div className="input-control">{element}</div>
       {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
     </div>
   );
