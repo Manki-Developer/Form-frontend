@@ -11,7 +11,7 @@ const Thread = (props) => {
     <div className="Thread-main">
       {/* profile-info start */}
       <div>
-        <a href="/" className="profile-info">
+        <Link to="/profile/0" className="profile-info">
           <img
             className="profile-info-picture"
             src="https://pbs.twimg.com/profile_images/1366466342354751491/JyhZpbtu_400x400.jpg"
@@ -25,7 +25,7 @@ const Thread = (props) => {
               <p>{props.userName} - 15 minutes ago</p>
             </div>
           </div>
-        </a>
+        </Link>
       </div>
       {/* profile-info end */}
 

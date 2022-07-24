@@ -3,6 +3,7 @@ import Post from "../../components/Post/Post";
 import Button from "../../components/FormElements/Button/Button";
 import Input from "../../components/FormElements/Input/Input";
 import PersonIcon from "@mui/icons-material/Person";
+import {Link} from "react-router-dom";
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE
@@ -11,7 +12,6 @@ import "./Reply.css";
 import { useForm } from "../../hooks/form-hook";
 
 const Reply = () => {
-
 
     const [formState, inputHandler] = useForm({
       post: {
@@ -29,7 +29,7 @@ const Reply = () => {
       <div className="post-section">
         <div className="post-main">
           <div>
-            <a href="/" className="profile-information">
+            <Link to="/profile/0" className="profile-information">
               <img
                 className="profile-picture"
                 src="https://pbs.twimg.com/profile_images/1366466342354751491/JyhZpbtu_400x400.jpg"
@@ -42,7 +42,7 @@ const Reply = () => {
                   <p>Goku</p>
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="post-description">
             <p className="edit-time">2 second ago</p>
