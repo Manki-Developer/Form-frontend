@@ -82,7 +82,11 @@ function Input(props) {
     >
       <label htmlFor={props.id}>{props.label}</label>
       <div className="input-control">{element}</div>
-      {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
+      {props.isEdit ? (
+        <div></div>
+      ) : (
+        !inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>
+      )}
     </div>
   );
 }
