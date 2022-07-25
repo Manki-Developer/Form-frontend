@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import DehazeIcon from '@mui/icons-material/Dehaze';
 import {
   DropdownMenu,
   DropdownItem,
   ButtonDropdown,
   DropdownToggle,
 } from "reactstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
 import "./MainNavigation.css";
@@ -20,7 +21,7 @@ function MainNavigation(props) {
   const Navigation_link_right = [{ path: "/user/login", title: "Login" }];
 
   const [dropdownOpen, setOpen] = useState(false);
-  const isLogin = false;
+  const isLogin = true;
 
   // function toggle(){
   //   setDropDownOpen(!dropdownOpen);
@@ -54,10 +55,12 @@ function MainNavigation(props) {
             }}
             isOpen={dropdownOpen}
           >
-            <DropdownToggle caret>Name</DropdownToggle>
+            <DropdownToggle tag="a" className="nav-link"><DehazeIcon sx={{color: "black"}}></DehazeIcon></DropdownToggle>
             <DropdownMenu right>
               {/* <DropdownItem header>Numeric Characters</DropdownItem> */}
-              <DropdownItem>Setting</DropdownItem>
+              <Link to="/profile/0"><DropdownItem>My Profile</DropdownItem></Link>
+              <Link to="/edit-profile/0"><DropdownItem>Edit Profile</DropdownItem></Link>
+              <DropdownItem divider />
               <DropdownItem>Logout</DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>

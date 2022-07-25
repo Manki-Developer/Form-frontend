@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
 import Thread from '../../components/Thread/Thread';
+import Button from "../../components/FormElements/Button/Button";
+import Input from "../../components/FormElements/Input/Input";
+import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from "@mui/icons-material/Clear";
+import {
+  VALIDATOR_REQUIRE
+} from "../../util/validators";
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -24,9 +31,62 @@ const Dashboard = () => {
     },
   ]);
 
+  const [openForm, setOpenForm] = useState(false);
+  let isLogin = true;
+
+  function elements() {
+    if(isLogin && openForm){
+      return (<div className='add-thread'>
+        <button
+          className="clearIcon-button-2"
+          onClick={() => {setOpenForm(false)}}
+        >
+          <ClearIcon sx={{ color: "black", fontSize: 20 }}></ClearIcon>
+        </button>
+        <form>
+          <Input
+            id="title"
+            element="input"
+            type="text"
+            placeholder="Enter a title"
+            rows={6}
+            validators={[VALIDATOR_REQUIRE()]}
+            onInput={inputHandler}
+            />
+          <Input
+            id="thread"
+            element="textarea"
+            type="text"
+            placeholder="Create a thread"
+            rows={6}
+            validators={[VALIDATOR_REQUIRE()]}
+            onInput={inputHandler}
+          />
+          <div className="submit-button">
+            <Button size="big" register={true}>
+              Submit
+            </Button>
+          </div>
+        </form> 
+      </div> );
+    }else if(isLogin && !openForm){
+      return (<button className='button-primary' onClick={() => {setOpenForm(true)}}>
+        <AddIcon sx={{fontSize: 20}}></AddIcon>
+        <p>Add New Thread</p>
+      </button> );
+    }else{
+      return (<></>);
+    }
+  }
+
+  const inputHandler = () => {
+    
+  }
+
   return (
     <div>
       <div className='thread-container'>
+        {elements()}
         {threadArray.map((thread, index) => (
           <Thread
             key={index}
