@@ -6,6 +6,9 @@ import MainNavigation from "./components/Navigations/MainNavigation/MainNavigati
 import Reply from "./pages/Reply/Reply";
 import Profile from "./pages/Profile/profile";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from "./store";
+import Alert from "./components/Alert/Alert";
 
 function App() {
   //To add page route, add an object below:
@@ -22,16 +25,19 @@ function App() {
 
   //For now, don't changed the code below
   return (
-    <Router>
-      <MainNavigation />
-      <main>
-        <Routes>
-          {ROUTE_TO_PAGES.map(({path, Element}, index) => {
-            return (<Route path={path} element={Element} key={index} />);
-          })}
-        </Routes>
-      </main>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <MainNavigation />
+        <Alert />
+        <main>
+          <Routes>
+            {ROUTE_TO_PAGES.map(({path, Element}, index) => {
+              return (<Route path={path} element={Element} key={index} />);
+            })}
+          </Routes>
+        </main>
+      </Router>
+    </Provider>
   );
 }
 

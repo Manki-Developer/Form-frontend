@@ -2,12 +2,16 @@ import React from "react";
 import Card from "../../UIElements/Card/Card";
 import Input from "../../FormElements/Input/Input";
 import Button from "../../FormElements/Button/Button";
+import PropTypes from 'prop-types';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from "../../../util/validators";
 import { useForm } from "../../../hooks/form-hook";
+import { login } from "../../../actions/auth";
+import { connect } from 'react-redux';
+import { Link, Navigate } from 'react-router-dom';
 
 import "./Login.css";
 
-const Login = (props) => {
+const Login = ({login, isAuthenticated, handleChange}) => {
   const [formState, inputHandler] = useForm(
     {
       email: {
@@ -21,10 +25,14 @@ const Login = (props) => {
     },
     false
   );
-
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(formState);
+    login(formState.email.value, formState.password.value);
+    // console.log(formState);
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />;
   }
 
   return (
@@ -56,7 +64,7 @@ const Login = (props) => {
       </form>
       <button
         className="switchButton"
-        onClick={() => props.handleChange("event", 1)}
+        onClick={event => handleChange(event, 1)}
       >
         Don't have an account yet? Create one
       </button>
@@ -64,4 +72,13 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  handleChange: PropTypes.func.isRequired
+}
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(Login);
