@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import MainNavigation from "./components/Navigations/MainNavigation/MainNavigation";
 import Reply from "./pages/Reply/Reply";
 import Profile from "./pages/Profile/profile";
+import Editprofile from "./pages/Editprofile/Editprofile";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from 'react-redux';
 import store from "./store";
@@ -23,6 +24,7 @@ const App = () => {
     { path: "/dashboard", Element: <Dashboard /> },
     { path: "/reply/:threadId", Element: <Reply /> },
     { path: "/profile/:userId", Element: <Profile /> },
+    { path: "/edit-profile/:userId", Element: <Editprofile /> },
     { path: "*", Element: <Dashboard /> },
   ];
 

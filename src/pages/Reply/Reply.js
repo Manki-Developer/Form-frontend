@@ -5,7 +5,6 @@ import Input from "../../components/FormElements/Input/Input";
 import PersonIcon from "@mui/icons-material/Person";
 import {Link} from "react-router-dom";
 import {
-  VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE
 } from "../../util/validators";
 import "./Reply.css";

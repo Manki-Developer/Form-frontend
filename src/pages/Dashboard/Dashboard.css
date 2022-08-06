@@ -1,3 +1,51 @@
 .thread-container{
     padding: 4rem 100px;
 }
+
+.add-thread{
+    border: 1px solid #eee;
+    padding: 0px 20px;
+    padding-bottom: 10px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.clearIcon-button-2{
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0px;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.button-primary{
+    display: inline-block;
+    padding: 0.6rem 1.3rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    transition: opacity 0.2s ease-in;
+    outline: none;
+    background-color: #008cff;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.button-primary p{
+    margin-bottom: 0px;
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+.button-primary:hover, 
+.button-primary:active{
+    background: #2a9fff;
+}
+

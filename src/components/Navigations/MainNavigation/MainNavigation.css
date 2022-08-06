@@ -47,6 +47,10 @@ main {
     align-items: center;
 }
 
+.nav-link:hover{
+    cursor: pointer;
+}
+
 .nav-links li {
     margin: 1rem;
     color: black;
@@ -61,6 +65,7 @@ main {
 .nav-links a:hover {
     color: #008cff;
 }
+
 
 .nav-links a:active,
 .nav-links a.active {
