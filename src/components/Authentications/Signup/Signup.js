@@ -2,6 +2,7 @@ import React from "react";
 import Card from "../../UIElements/Card/Card";
 import Input from "../../FormElements/Input/Input";
 import Button from "../../FormElements/Button/Button";
+import PropTypes from 'prop-types';
 import { useForm } from "../../../hooks/form-hook";
 import {
   VALIDATOR_EMAIL,
@@ -9,10 +10,15 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MATCH
 } from "../../../util/validators";
+import { Link, Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setAlert } from "../../../actions/alert";
+import { register } from "../../../actions/auth";
+
 
 import "./Signup.css";
 
-const Signup = (props) => {
+const Signup = ({setAlert, register, isAuthenticated, handleChange}) => {
   const [formState, inputHandler] = useForm(
     {
       username: {
@@ -38,10 +44,24 @@ const Signup = (props) => {
     },
     false
   );
-
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(formState);
+    if (formState.inputs.password.value !== formState.inputs.repassword.value) {
+      setAlert('Passwords do not match', 'danger');
+    } else {
+      const payload = {
+        username: formState.inputs.username.value,
+        name: formState.inputs.name.value,
+        email: formState.inputs.email.value,
+        password: formState.inputs.password.value
+      }
+      register(payload);
+    }
+    // console.log(formState);
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />;
   }
  
   return (
@@ -101,7 +121,7 @@ const Signup = (props) => {
       </form>
       <button
         className="switchButton"
-        onClick={() => props.handleChange("event", 0)}
+        onClick={event => handleChange(event, 0)}
       >
         Already have an account? Log in
       </button>
@@ -109,4 +129,14 @@ const Signup = (props) => {
   );
 };
 
-export default Signup;
+Signup.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Signup);
