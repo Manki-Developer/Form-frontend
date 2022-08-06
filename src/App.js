@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./App.css";
 import Authentication from "./pages/Authentication/Authentication";
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -9,8 +9,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from 'react-redux';
 import store from "./store";
 import Alert from "./components/Alert/Alert";
+import authToken from "./util/authToken";
+import {LOGOUT} from './actions/type';
+import { loadUser } from "./actions/auth";
 
-function App() {
+const App = () => {
   //To add page route, add an object below:
   //{path: "page path", Element: "The imported page object"}
   //note * is used to find if there's no match path found 
@@ -22,6 +25,22 @@ function App() {
     { path: "/profile/:userId", Element: <Profile /> },
     { path: "*", Element: <Dashboard /> },
   ];
+
+  useEffect(() => {
+    // check for token in LS when app first runs
+    if (localStorage.token) {
+      // if there is a token set axios headers for all requests
+      authToken(localStorage.token);
+    }
+    // try to fetch a user, if no token or invalid token we
+    // will get a 401 response from our API
+    store.dispatch(loadUser());
+
+    // log user out from all tabs if they log out in one tab
+    window.addEventListener('storage', () => {
+      if (!localStorage.token) store.dispatch({ type: LOGOUT });
+    });
+  }, []);
 
   //For now, don't changed the code below
   return (

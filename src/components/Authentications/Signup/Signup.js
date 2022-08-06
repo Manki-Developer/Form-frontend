@@ -46,13 +46,14 @@ const Signup = ({setAlert, register, isAuthenticated, handleChange}) => {
   );
   const submitHandler = (e) => {
     e.preventDefault();
-    if (formState.password.value !== formState.repassword.value) {
+    if (formState.inputs.password.value !== formState.inputs.repassword.value) {
       setAlert('Passwords do not match', 'danger');
     } else {
       const payload = {
-        name: formState.username.value,
-        email: formState.email.value,
-        password: formState.password.value
+        username: formState.inputs.username.value,
+        name: formState.inputs.name.value,
+        email: formState.inputs.email.value,
+        password: formState.inputs.password.value
       }
       register(payload);
     }

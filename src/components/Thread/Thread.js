@@ -4,9 +4,16 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import PersonIcon from '@mui/icons-material/Person';
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { deletePost } from "../../actions/post";
 import "./Thread.css";
 
-const Thread = (props) => {
+const Thread = ({
+  deletePost,
+  auth,
+  post: { _id, title, description, createdAt, comments, creator },
+}) => {
   return (
     <div className="Thread-main">
       {/* profile-info start */}
@@ -19,10 +26,10 @@ const Thread = (props) => {
           />
 
           <div className="recent-post-wrapper">
-            <h4>Kakarot</h4>
+            <h4>{creator}</h4>
             <div className="recent-user-post-profile-name">
               <PersonIcon></PersonIcon>
-              <p>{props.userName} - 15 minutes ago</p>
+              <p>{creator} - {createdAt}</p>
             </div>
           </div>
         </Link>
@@ -31,21 +38,29 @@ const Thread = (props) => {
 
       {/* title-thread start */}
       <div className="Title-thread">
-        <Link to={`/reply/${props.id}`} className="Announcement-button">
-          {props.announcement}
+        <Link to={`/reply/${_id}`} className="Announcement-button">
+          {title}
           <hr />
-          <p className="threadDesc">{props.description}</p>
+          <p className="threadDesc">{description}</p>
         </Link>
       </div>
       {/* title-thread end */}
       <div className="number-posts">
         <ChatBubbleIcon></ChatBubbleIcon>
-        <p>2 posts</p>
+        {comments.length > 0 && ( <p>{comments.length}</p>)}
       </div>
     </div>
   );
-
-
 };
 
-export default Thread;
+Thread.propTypes = {
+  post: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  deletePost: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps , { deletePost})(Thread);

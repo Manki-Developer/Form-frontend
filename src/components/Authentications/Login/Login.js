@@ -27,7 +27,7 @@ const Login = ({login, isAuthenticated, handleChange}) => {
   );
   const submitHandler = (e) => {
     e.preventDefault();
-    login(formState.email.value, formState.password.value);
+    login(formState.inputs.email.value, formState.inputs.password.value);
     // console.log(formState);
   }
 
