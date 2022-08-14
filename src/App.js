@@ -15,6 +15,11 @@ import {LOGOUT} from './actions/type';
 import { loadUser } from "./actions/auth";
 
 const App = () => {
+
+  if (localStorage.token) {
+    // if there is a token set axios headers for all requests
+    authToken(localStorage.token);
+  }
   //To add page route, add an object below:
   //{path: "page path", Element: "The imported page object"}
   //note * is used to find if there's no match path found 
@@ -29,11 +34,6 @@ const App = () => {
   ];
 
   useEffect(() => {
-    // check for token in LS when app first runs
-    if (localStorage.token) {
-      // if there is a token set axios headers for all requests
-      authToken(localStorage.token);
-    }
     // try to fetch a user, if no token or invalid token we
     // will get a 401 response from our API
     store.dispatch(loadUser());

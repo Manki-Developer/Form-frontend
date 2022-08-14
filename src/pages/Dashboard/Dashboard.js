@@ -1,4 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import Button from "../../components/FormElements/Button/Button";
+import Input from "../../components/FormElements/Input/Input";
+import AddIcon from "@mui/icons-material/Add";
+import ClearIcon from "@mui/icons-material/Clear";
+import { VALIDATOR_REQUIRE } from "../../util/validators";
 import { getPosts } from '../../actions/post';
 import Thread from '../../components/Thread/Thread';
 import PropTypes from 'prop-types';
@@ -36,6 +41,10 @@ const Dashboard = ({ getPosts, post: { posts } }) => {
 
   const [openForm, setOpenForm] = useState(false);
   let isLogin = true;
+
+  const inputHandler = () => {
+
+  }
 
   function elements() {
     if(isLogin && openForm){
@@ -82,13 +91,10 @@ const Dashboard = ({ getPosts, post: { posts } }) => {
     }
   }
 
-  // const inputHandler = () => {
-    
-  // }
-
   return (
     <div>
       <div className='thread-container'>
+        {elements()}
         {posts.map((post) => (
           <Thread key={post._id} post={post} />))}
       </div>

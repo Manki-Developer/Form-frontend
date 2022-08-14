@@ -14,6 +14,7 @@ import {
 // @desc: Get all posts
 // @route: api/posts
 export const getPosts = () => async (dispatch) => {
+
   try {
     const res = await api.get('/posts');
 
@@ -103,8 +104,9 @@ export const addPost = (formData) => async (dispatch) => {
 
 // Get post
 export const getPost = (id) => async (dispatch) => {
+
   try {
-    const res = await api.get(`/posts/${id}`);
+    const res = await api.get(`/posts/single/${id}`);
 
     dispatch({
       type: GET_POST,
