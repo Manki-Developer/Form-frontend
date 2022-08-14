@@ -11,14 +11,13 @@ import "./Reply.css";
 import { useForm } from "../../hooks/form-hook";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getPost } from "../../actions/post";
+import { getPost, addComment } from "../../actions/post";
 
-const Reply = ({getPost, post, auth}) => {
+const Reply = ({getPost, post: {post, comments}, addComment, auth}) => {
     // missing title
     // missing real name
     // missing delete button
     // missing comment
-
 
     const { threadId } = useParams();
     useEffect(() => {
@@ -29,7 +28,7 @@ const Reply = ({getPost, post, auth}) => {
     // console.log(threadId);
 
     const [formState, inputHandler] = useForm({
-      post: {
+      text: {
         value: "",
         isValid: false,
       },
@@ -37,8 +36,11 @@ const Reply = ({getPost, post, auth}) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(formState);
+        addComment(post._id, formState.inputs.text.value);
     };
+
+    // console.log(post);
+    // console.log(comments);
     
     return (
       <div>
@@ -55,32 +57,30 @@ const Reply = ({getPost, post, auth}) => {
                     alt="test"
                   />
                   <div>
-                    <h3>{post.post.creatorName}</h3>
+                    <h3>{post.creatorName}</h3>
                     <div className="profile-username">
                       <PersonIcon></PersonIcon>
-                      <p>{post.post.creatorUsername}</p>
+                      <p>{post.creatorUsername}</p>
                     </div>
                   </div>
                 </Link>
               </div>
               <div className="post-description">
-                <p className="edit-time">{post.post.createdAt}</p>
-                <p className="edit-description">{post.post.description}</p>
+                <p className="edit-time">{post.createdAt}</p>
+                <p className="edit-description">{post.description}</p>
               </div>
             </div>
-            {/* {"ini nanti jadi array"} */}
-            {/* <Post comment={post.comment}/> */}
-            {/* <Post /> */}
+            {comments.map((comment) => (<Post key={comment._id} comment={comment}/>))}
             <div className="post-form">
               <div className="post-decor">
                 <h3>Say Something...</h3>
               </div>
               <form onSubmit={submitHandler}>
                 <Input
-                  id="post"
+                  id="text"
                   element="textarea"
                   type="text"
-                  placeholder="Create a post"
+                  placeholder="Create a comment"
                   rows={6}
                   validators={[VALIDATOR_REQUIRE()]}
                   onInput={inputHandler}
@@ -104,6 +104,7 @@ const Reply = ({getPost, post, auth}) => {
 
 Reply.propTypes = {
   getPost: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   // deletePost: PropTypes.func.isRequired
 };
@@ -113,4 +114,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getPost })(Reply);
+export default connect(mapStateToProps, { getPost, addComment })(Reply);

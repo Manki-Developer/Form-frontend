@@ -12,7 +12,7 @@ import "./Thread.css";
 const Thread = ({
   deletePost,
   auth,
-  post: { _id, title, description, createdAt, comments, creator },
+  post: { _id, title, description, createdAt, comments, creatorName, creatorUsername, creator },
 }) => {
   return (
     <div className="Thread-main">
@@ -26,10 +26,12 @@ const Thread = ({
           />
 
           <div className="recent-post-wrapper">
-            <h4>{creator}</h4>
+            <h4>{creatorName}</h4>
             <div className="recent-user-post-profile-name">
               <PersonIcon></PersonIcon>
-              <p>{creator} - {createdAt}</p>
+              <p>
+                {creatorUsername} - {createdAt}
+              </p>
             </div>
           </div>
         </Link>
@@ -47,7 +49,7 @@ const Thread = ({
       {/* title-thread end */}
       <div className="number-posts">
         <ChatBubbleIcon></ChatBubbleIcon>
-        {comments.length > 0 && ( <p>{comments.length}</p>)}
+        {comments.length > 0 && <p>{comments.length}</p>}
       </div>
     </div>
   );

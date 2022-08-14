@@ -2,9 +2,14 @@ import react from "react";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ClearIcon from "@mui/icons-material/Clear";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import "./Post.css";
 
-const Post = (props) => {
+const Post = ({
+  auth,
+  comment: {text, creatorName, createdAt},
+}) => {
   return (
     <div className="post bg-white p-1 my-1">
       <div className="post-profile">
@@ -14,17 +19,12 @@ const Post = (props) => {
             src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
             alt=""
           />
-          <h3>John Doe</h3>
+          <h3>{creatorName}</h3>
         </a>
       </div>
       <div>
-        <p className="my-1">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint possimus
-          corporis sunt necessitatibus! Minus nesciunt soluta suscipit nobis.
-          Amet accusamus distinctio cupiditate blanditiis dolor? Illo
-          perferendis eveniet cum cupiditate aliquam?
-        </p>
-        <p className="post-date">Posted on 04/16/2019</p>
+        <p className="my-1">{text}</p>
+        <p className="post-date">Posted on {createdAt}</p>
         <button type="button" className="btn btn-light">
           <div className="likes-button">
             <ThumbUpIcon></ThumbUpIcon>
@@ -45,4 +45,13 @@ const Post = (props) => {
   );
 };
 
-export default Post;
+Post.propTypes = {
+  comment: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(Post);
