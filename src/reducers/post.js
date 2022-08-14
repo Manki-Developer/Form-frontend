@@ -11,7 +11,8 @@ import {
 
 const initialState = {
     posts: [],
-    post: null,
+    post: [],
+    comments: [],
     loading: true,
     error: {}
 };
@@ -30,6 +31,7 @@ function postReducer(state = initialState, action) {
         return {
             ...state,
             post: payload,
+            comments: payload.comments,
             loading: false
         };
         case ADD_POST:
@@ -60,9 +62,9 @@ function postReducer(state = initialState, action) {
         };
         case ADD_COMMENT:
         return {
-            ...state,
-            post: { ...state.post, comments: payload },
-            loading: false
+          ...state,
+          comments:[...state.comments, payload.comments],
+          loading: false,
         };
         case REMOVE_COMMENT:
         return {

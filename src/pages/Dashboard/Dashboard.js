@@ -1,96 +1,108 @@
-import React, {useEffect} from 'react';
-import { getPosts } from '../../actions/post';
+import React, {useEffect, useState} from 'react';
+import Button from "../../components/FormElements/Button/Button";
+import Input from "../../components/FormElements/Input/Input";
+import AddIcon from "@mui/icons-material/Add";
+import ClearIcon from "@mui/icons-material/Clear";
+import { VALIDATOR_REQUIRE } from "../../util/validators";
+import { getPosts, addPost } from '../../actions/post';
 import Thread from '../../components/Thread/Thread';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import { useForm } from '../../hooks/form-hook';
 
 
 import './Dashboard.css';
 
-const Dashboard = ({ getPosts, post: { posts } }) => {
-
+const Dashboard = ({ getPosts, addPost, post: { posts } }) => {
   useEffect(() => {
     getPosts();
   }, [getPosts]);
-  
-  // const [threadArray, setThreadArray] = useState([
-  //   {
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. sadf asdf asdfasdfasdfasdf f asdfasd asdf fasd fasdf a sda fasdf asdfsafdsafasdf asdf asdfas sadfsadf asdf asdfasdfas saf sadfasdfasdf  asdf sdafasdfasdfasdf dsafsadfasdfasfasdf asdf sadf sad fasdfasdfsdfsadfawgsdfgasaf  safasdfsas",
-  //     threadCount: 2,
-  //     postCount: 7,
-  //     userName: "Goku",
-  //     pinMessage: "Welcome to Rengorum",
-  //     announcement: "Announcement 1",
-  //   },
-  //   {
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     threadCount: 2,
-  //     postCount: 7,
-  //     userName: "Goku",
-  //     pinMessage: "Welcome to Rengorum",
-  //     announcement: "Announcement 2",
-  //   },
-  // ]);
 
   const [openForm, setOpenForm] = useState(false);
   let isLogin = true;
 
+  const [formState, inputHandler] = useForm(
+    {
+      title: {
+        value: "",
+        isValid: false,
+      },
+      description: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false
+  );
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    addPost(formState.inputs.title.value, formState.inputs.description.value);
+  };
+
   function elements() {
-    if(isLogin && openForm){
-      return (<div className='add-thread'>
-        <button
-          className="clearIcon-button-2"
-          onClick={() => {setOpenForm(false)}}
-        >
-          <ClearIcon sx={{ color: "black", fontSize: 20 }}></ClearIcon>
-        </button>
-        <form>
-          <Input
-            id="title"
-            element="input"
-            type="text"
-            placeholder="Enter a title"
-            rows={6}
-            validators={[VALIDATOR_REQUIRE()]}
-            onInput={inputHandler}
+    if (isLogin && openForm) {
+      return (
+        <div className="add-thread">
+          <button
+            className="clearIcon-button-2"
+            onClick={() => {
+              setOpenForm(false);
+            }}
+          >
+            <ClearIcon sx={{ color: "black", fontSize: 20 }}></ClearIcon>
+          </button>
+          <form onSubmit={submitHandler}>
+            <Input
+              id="title"
+              element="input"
+              type="text"
+              placeholder="Enter a title"
+              rows={6}
+              validators={[VALIDATOR_REQUIRE()]}
+              onInput={inputHandler}
             />
-          <Input
-            id="thread"
-            element="textarea"
-            type="text"
-            placeholder="Create a thread"
-            rows={6}
-            validators={[VALIDATOR_REQUIRE()]}
-            onInput={inputHandler}
-          />
-          <div className="submit-button">
-            <Button size="big" register={true}>
-              Submit
-            </Button>
-          </div>
-        </form> 
-      </div> );
-    }else if(isLogin && !openForm){
-      return (<button className='button-primary' onClick={() => {setOpenForm(true)}}>
-        <AddIcon sx={{fontSize: 20}}></AddIcon>
-        <p>Add New Thread</p>
-      </button> );
-    }else{
-      return (<></>);
+            <Input
+              id="description"
+              element="textarea"
+              type="text"
+              placeholder="Create a post"
+              rows={6}
+              validators={[VALIDATOR_REQUIRE()]}
+              onInput={inputHandler}
+            />
+            <div className="submit-button">
+              <Button size="big" register={true} disabled={!formState.isValid}>
+                Submit
+              </Button>
+            </div>
+          </form>
+        </div>
+      );
+    } else if (isLogin && !openForm) {
+      return (
+        <button
+          className="button-primary"
+          onClick={() => {
+            setOpenForm(true);
+          }}
+        >
+          <AddIcon sx={{ fontSize: 20 }}></AddIcon>
+          <p>Add New Thread</p>
+        </button>
+      );
+    } else {
+      return <></>;
     }
   }
 
-  // const inputHandler = () => {
-    
-  // }
-
   return (
     <div>
-      <div className='thread-container'>
+      <div className="thread-container">
+        {elements()}
         {posts.map((post) => (
-          <Thread key={post._id} post={post} />))}
+          <Thread key={post._id} post={post} />
+        ))}
       </div>
     </div>
   );
@@ -98,6 +110,7 @@ const Dashboard = ({ getPosts, post: { posts } }) => {
 
 Dashboard.propTypes = {
   getPosts: PropTypes.func.isRequired,
+  addPost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired
 }
 
@@ -106,4 +119,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps, { getPosts })(Dashboard);
+export default connect(mapStateToProps, { getPosts, addPost })(Dashboard);

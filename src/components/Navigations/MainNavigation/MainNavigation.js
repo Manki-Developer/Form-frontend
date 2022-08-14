@@ -7,11 +7,14 @@ import {
   DropdownToggle,
 } from "reactstrap";
 import { NavLink, Link } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import "bootstrap/dist/css/bootstrap.css";
+import { logout } from "../../../actions/auth";
 
 import "./MainNavigation.css";
 
-function MainNavigation(props) {
+function MainNavigation({ auth: { isAuthenticated }, logout }) {
   //This is the Navigation on the left, to add create an object:
   //[{path: "path to link", title: "the name of navigation"}]
   const Navigation_link_left = [{ path: "/dashboard", title: "Home" }];
@@ -21,12 +24,7 @@ function MainNavigation(props) {
   const Navigation_link_right = [{ path: "/user/login", title: "Login" }];
 
   const [dropdownOpen, setOpen] = useState(false);
-  const isLogin = true;
-
-  // function toggle(){
-  //   setDropDownOpen(!dropdownOpen);
-  // }
-
+  
   //For this component, you don't need to update any of the code below
   //add the navigation by adding the object into the 2 array above^ (left or right)
   return (
@@ -48,7 +46,7 @@ function MainNavigation(props) {
             })}
           </ul>
         </nav>
-        {isLogin ? (
+        {isAuthenticated ? (
           <ButtonDropdown
             toggle={() => {
               setOpen(!dropdownOpen);
@@ -56,12 +54,16 @@ function MainNavigation(props) {
             isOpen={dropdownOpen}
           >
             <DropdownToggle tag="a" className="nav-link"><DehazeIcon sx={{color: "black"}}></DehazeIcon></DropdownToggle>
-            <DropdownMenu right>
+            <DropdownMenu end>
               {/* <DropdownItem header>Numeric Characters</DropdownItem> */}
               <Link to="/profile/0"><DropdownItem>My Profile</DropdownItem></Link>
               <Link to="/edit-profile/0"><DropdownItem>Edit Profile</DropdownItem></Link>
               <DropdownItem divider />
-              <DropdownItem>Logout</DropdownItem>
+              <DropdownItem>
+                <a onClick={logout} href="#!">
+                    Logout
+                </a>
+              </DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>
         ) : (
@@ -84,4 +86,13 @@ function MainNavigation(props) {
   );
 }
 
-export default MainNavigation;
+MainNavigation.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, {logout})(MainNavigation);

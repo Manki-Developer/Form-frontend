@@ -14,6 +14,7 @@ import {
 // @desc: Get all posts
 // @route: api/posts
 export const getPosts = () => async (dispatch) => {
+
   try {
     const res = await api.get('/posts');
 
@@ -83,9 +84,10 @@ export const deletePost = (id) => async (dispatch) => {
 };
 
 // Add post
-export const addPost = (formData) => async (dispatch) => {
+export const addPost = (title, description) => async (dispatch) => {
+  const body = {title, description}
   try {
-    const res = await api.post('/posts', formData);
+    const res = await api.post("/posts", body);
 
     dispatch({
       type: ADD_POST,
@@ -103,8 +105,9 @@ export const addPost = (formData) => async (dispatch) => {
 
 // Get post
 export const getPost = (id) => async (dispatch) => {
+
   try {
-    const res = await api.get(`/posts/${id}`);
+    const res = await api.get(`/posts/single/${id}`);
 
     dispatch({
       type: GET_POST,
@@ -119,9 +122,10 @@ export const getPost = (id) => async (dispatch) => {
 };
 
 // Add comment
-export const addComment = (postId, formData) => async (dispatch) => {
+export const addComment = (postId, text) => async (dispatch) => {
+  const body = {text};
   try {
-    const res = await api.post(`/posts/comment/${postId}`, formData);
+    const res = await api.post(`/comments/${postId}`, body);
 
     dispatch({
       type: ADD_COMMENT,
