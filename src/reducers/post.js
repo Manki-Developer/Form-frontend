@@ -6,12 +6,14 @@ import {
     ADD_POST,
     GET_POSTS,
     ADD_COMMENT, 
-    REMOVE_COMMENT
+    REMOVE_COMMENT,
+    GET_POST_USERNAME
 } from '../actions/type';
 
 const initialState = {
     posts: [],
     post: [],
+    postUsername:[],
     comments: [],
     loading: true,
     error: {}
@@ -32,6 +34,12 @@ function postReducer(state = initialState, action) {
             ...state,
             post: payload,
             comments: payload.comments,
+            loading: false
+        };
+        case GET_POST_USERNAME:
+        return {
+            ...state,
+            postUsername: payload,
             loading: false
         };
         case ADD_POST:

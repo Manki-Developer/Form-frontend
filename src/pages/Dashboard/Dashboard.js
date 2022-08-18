@@ -13,13 +13,15 @@ import { useForm } from '../../hooks/form-hook';
 
 import './Dashboard.css';
 
-const Dashboard = ({ getPosts, addPost, post: { posts } }) => {
+const Dashboard = ({ getPosts, addPost, post: { posts }, isAuthenticated }) => {
   useEffect(() => {
     getPosts();
   }, [getPosts]);
 
+  console.log(posts);
+
   const [openForm, setOpenForm] = useState(false);
-  let isLogin = true;
+  // let isLogin = true;
 
   const [formState, inputHandler] = useForm(
     {
@@ -41,7 +43,7 @@ const Dashboard = ({ getPosts, addPost, post: { posts } }) => {
   };
 
   function elements() {
-    if (isLogin && openForm) {
+    if (isAuthenticated && openForm) {
       return (
         <div className="add-thread">
           <button
@@ -79,7 +81,7 @@ const Dashboard = ({ getPosts, addPost, post: { posts } }) => {
           </form>
         </div>
       );
-    } else if (isLogin && !openForm) {
+    } else if (isAuthenticated && !openForm) {
       return (
         <button
           className="button-primary"
@@ -111,11 +113,13 @@ const Dashboard = ({ getPosts, addPost, post: { posts } }) => {
 Dashboard.propTypes = {
   getPosts: PropTypes.func.isRequired,
   addPost: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool
 }
 
 const mapStateToProps = (state) => ({
-  post: state.post
+  post: state.post,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 

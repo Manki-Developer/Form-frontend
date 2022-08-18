@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
@@ -18,7 +18,7 @@ const Thread = ({
     <div className="Thread-main">
       {/* profile-info start */}
       <div>
-        <Link to="/profile/0" className="profile-info">
+        <Link to={`/profile/${creatorUsername}`} className="profile-info">
           <img
             className="profile-info-picture"
             src="https://pbs.twimg.com/profile_images/1366466342354751491/JyhZpbtu_400x400.jpg"
