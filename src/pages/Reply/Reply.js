@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Post from "../../components/Post/Post";
 import Button from "../../components/FormElements/Button/Button";
-import Spinner from 'react-bootstrap/Spinner';
 import Input from "../../components/FormElements/Input/Input";
 import PersonIcon from "@mui/icons-material/Person";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -29,10 +28,6 @@ const Reply = ({
   deletePost,
   auth,
 }) => {
-  // missing title
-  // missing real name
-  // missing delete button
-  // missing comment
 
     const { threadId } = useParams();
     const navigate = useNavigate();
@@ -121,13 +116,15 @@ const Reply = ({
                 </div>
               </button>
             </div>
-            <button
-              onClick={() => deletePost(threadId, navigate)}
-              type="button"
-              className="btn btn-danger"
-            >
-              <ClearIcon></ClearIcon>
-            </button>
+            <div className="post-delete">
+              <button
+                onClick={() => deletePost(threadId, navigate)}
+                type="button"
+                className="btn btn-danger"
+              >
+                <ClearIcon></ClearIcon>
+              </button>
+            </div>
           </div>
 
           {comments.map((comment) => (
