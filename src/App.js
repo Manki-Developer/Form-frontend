@@ -4,7 +4,7 @@ import Authentication from "./pages/Authentication/Authentication";
 import Dashboard from './pages/Dashboard/Dashboard';
 import MainNavigation from "./components/Navigations/MainNavigation/MainNavigation";
 import Reply from "./pages/Reply/Reply";
-import Profile from "./pages/Profile/profile";
+import Profile from "./pages/Profile/ProfilePage";
 import Editprofile from "./pages/Editprofile/Editprofile";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from 'react-redux';

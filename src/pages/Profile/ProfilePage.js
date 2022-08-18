@@ -1,12 +1,25 @@
-import React from 'react';
+import React, {useEffect } from 'react';
 import PersonIcon from "@mui/icons-material/Person";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import EditIcon from "@mui/icons-material/Edit";
-import Post from '../../components/Post/Post';
-import { Link } from "react-router-dom";
-import "./profile.css";
+import { Link, useParams } from "react-router-dom";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import "./ProfilePage.css";
+import {getPostByUsername } from '../../actions/post';
+import Thread from '../../components/Thread/Thread';
 
-const profile = () => {
+const Profile = ({getPostByUsername, post:{postUsername}}) => {
+
+  const {userId} = useParams();
+    useEffect(() => {
+      getPostByUsername(userId);
+    }, [getPostByUsername, userId]);
+
+  console.log(userId);
+
+  console.log(postUsername);
+
   return (
     <div className="profile">
       <div className="profile-top bg-primary p-2">
@@ -33,10 +46,19 @@ const profile = () => {
         </div>
       </div>
       <div className="post-container">
-        <Post />
+        {postUsername.map(post => <Thread key={post._id} post={post} />)}
       </div>
     </div>
   );
 }
 
-export default profile;
+Profile.propTypes = {
+  getPostByUsername: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  post: state.post
+});
+
+export default connect(mapStateToProps, { getPostByUsername })(Profile);
