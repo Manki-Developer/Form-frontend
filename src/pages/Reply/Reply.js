@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import Post from "../../components/Post/Post";
 import Button from "../../components/FormElements/Button/Button";
+import Spinner from 'react-bootstrap/Spinner';
 import Input from "../../components/FormElements/Input/Input";
 import PersonIcon from "@mui/icons-material/Person";
+import ClearIcon from "@mui/icons-material/Clear";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { VALIDATOR_MINLENGTH } from "../../util/validators";
 import "./Reply.css";
 import { useForm } from "../../hooks/form-hook";
@@ -13,17 +15,18 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
   getPost,
-  addComment,
+  addComment,deletePost,
   toggleLike,
   toggleDislike,
 } from "../../actions/post";
 
 const Reply = ({
   getPost,
-  post: { post, comments, likes, dislikes },
+  post: { post, comments, likes, dislikes, loading },
   addComment,
   toggleLike,
   toggleDislike,
+  deletePost,
   auth,
 }) => {
   // missing title
@@ -31,10 +34,11 @@ const Reply = ({
   // missing delete button
   // missing comment
 
-  const { threadId } = useParams();
-  useEffect(() => {
-    getPost(threadId);
-  }, [getPost, threadId]);
+    const { threadId } = useParams();
+    const navigate = useNavigate();
+    useEffect(() => {
+        getPost(threadId);
+    }, [getPost, threadId]);
 
   // console.log(post);
   // console.log(threadId);
@@ -117,6 +121,13 @@ const Reply = ({
                 </div>
               </button>
             </div>
+            <button
+              onClick={() => deletePost(threadId, navigate)}
+              type="button"
+              className="btn btn-danger"
+            >
+              <ClearIcon></ClearIcon>
+            </button>
           </div>
 
           {comments.map((comment) => (
@@ -160,7 +171,7 @@ Reply.propTypes = {
   toggleLike: PropTypes.func.isRequired,
   toggleDislike: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
-  // deletePost: PropTypes.func.isRequired
+  deletePost: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -170,7 +181,8 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getPost,
-  addComment,
+  addComment, 
+  deletePost,
   toggleLike,
   toggleDislike,
 })(Reply);

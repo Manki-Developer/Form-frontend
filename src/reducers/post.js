@@ -7,6 +7,7 @@ import {
     GET_POSTS,
     ADD_COMMENT, 
     REMOVE_COMMENT,
+    GET_POST_USERNAME,
 } from '../actions/type';
 
 const initialState = {
@@ -14,9 +15,10 @@ const initialState = {
     post: [],
     likes: [],
     dislikes: [],
+    postUsername:[],
     comments: [],
     loading: true,
-    error: {}
+  error: {},
 };
 
 function postReducer(state = initialState, action) {
@@ -36,6 +38,12 @@ function postReducer(state = initialState, action) {
             comments: payload.comments,
             likes: payload.like,
             dislikes: payload.dislike,
+            loading: false
+        };
+        case GET_POST_USERNAME:
+        return {
+            ...state,
+            postUsername: payload,
             loading: false
         };
         case ADD_POST:
