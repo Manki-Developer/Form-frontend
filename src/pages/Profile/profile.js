@@ -33,7 +33,7 @@ const profile = () => {
         </div>
       </div>
       <div className="post-container">
-        <Post />
+        {/* <Post /> */}
       </div>
     </div>
   );

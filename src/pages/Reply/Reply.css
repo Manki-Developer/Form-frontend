@@ -1,6 +1,7 @@
 .post-section{
     width: 100%;
     display: block;
+    position: relative;
     padding: 30px 120px;
 }
 
@@ -20,10 +21,18 @@
 .post-main{
     width: 100%;
     display: flex;
+    position: relative;
     flex-direction: row;
     justify-content: center;
     border: #ccc solid 1px;
     padding: 20px;
+}
+
+.post-like{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 15px;
 }
 
 .profile-picture {

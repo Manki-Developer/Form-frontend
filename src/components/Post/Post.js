@@ -25,7 +25,7 @@ const Post = ({
       <div>
         <p className="my-1">{text}</p>
         <p className="post-date">Posted on {createdAt}</p>
-        <button type="button" className="btn btn-light">
+        {/* <button type="button" className="btn btn-light">
           <div className="likes-button">
             <ThumbUpIcon></ThumbUpIcon>
             <span>4</span>
@@ -39,7 +39,7 @@ const Post = ({
         </a>
         <button type="button" className="btn btn-danger">
           <ClearIcon></ClearIcon>
-        </button>
+        </button> */}
       </div>
     </div>
   );
