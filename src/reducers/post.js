@@ -7,16 +7,18 @@ import {
     GET_POSTS,
     ADD_COMMENT, 
     REMOVE_COMMENT,
-    GET_POST_USERNAME
+    GET_POST_USERNAME,
 } from '../actions/type';
 
 const initialState = {
     posts: [],
     post: [],
+    likes: [],
+    dislikes: [],
     postUsername:[],
     comments: [],
     loading: true,
-    error: {}
+  error: {},
 };
 
 function postReducer(state = initialState, action) {
@@ -34,6 +36,8 @@ function postReducer(state = initialState, action) {
             ...state,
             post: payload,
             comments: payload.comments,
+            likes: payload.like,
+            dislikes: payload.dislike,
             loading: false
         };
         case GET_POST_USERNAME:
@@ -62,11 +66,13 @@ function postReducer(state = initialState, action) {
         };
         case UPDATE_LIKES:
         return {
-            ...state,
-            posts: state.posts.map((post) =>
-            post._id === payload.id ? { ...post, likes: payload.likes } : post
-            ),
-            loading: false
+          ...state,
+          // posts: state.posts.map((post) =>
+          // post._id === payload.id ? { ...post, likes: payload.likes } : post
+          // ),
+          likes:payload.like,
+          dislikes: payload.dislike,
+          loading: false,
         };
         case ADD_COMMENT:
         return {

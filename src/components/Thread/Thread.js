@@ -49,7 +49,7 @@ const Thread = ({
       {/* title-thread end */}
       <div className="number-posts">
         <ChatBubbleIcon></ChatBubbleIcon>
-        {comments.length > 0 && <p>{comments.length}</p>}
+        {comments.length > 0 ? <p>{comments.length}</p> : <p>0</p>}
       </div>
     </div>
   );
