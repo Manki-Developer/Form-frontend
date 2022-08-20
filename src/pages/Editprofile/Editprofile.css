@@ -68,3 +68,8 @@
     border: 0px white;
     background-color: white;
 }
+
+.profile-picture{
+    width: 150px;
+    height: 150px;
+}

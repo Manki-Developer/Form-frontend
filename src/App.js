@@ -37,6 +37,7 @@ const App = () => {
     // try to fetch a user, if no token or invalid token we
     // will get a 401 response from our API
     store.dispatch(loadUser());
+    console.log("test");
 
     // log user out from all tabs if they log out in one tab
     window.addEventListener('storage', () => {

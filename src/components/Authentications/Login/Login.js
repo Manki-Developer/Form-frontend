@@ -7,7 +7,7 @@ import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from "../../../util/validators";
 import { useForm } from "../../../hooks/form-hook";
 import { login } from "../../../actions/auth";
 import { connect } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import "./Login.css";
 
