@@ -6,7 +6,15 @@ import ClearIcon from "@mui/icons-material/Clear";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useForm } from '../../hooks/form-hook';
-import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL } from "../../util/validators";
+import { setAlert } from '../../actions/alert';
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
+  VALIDATOR_EITHER,
+  VALIDATOR_MATCH,
+  VALIDATOR_REMATCH,
+} from "../../util/validators";
 import "./Editprofile.css";
 
 const Editprofile = ({ auth: { user }}) => {
@@ -48,15 +56,15 @@ const Editprofile = ({ auth: { user }}) => {
         {
           name: {
             value: user.name,
-            isValid: false,
+            isValid: true,
           },
           username: {
             value: user.username,
-            isValid: false,
+            isValid: true,
           },
           email: {
             value: user.email,
-            isValid: false,
+            isValid: true,
           },
           currPassword: {
             value: "",
@@ -64,24 +72,32 @@ const Editprofile = ({ auth: { user }}) => {
           },
           newPassword: {
             value: "",
-            isValid: false,
+            isValid: true,
           },
           renewPassword: {
             value: "",
-            isValid: false,
+            isValid: true,
           },
         },
-        true
+        false
       );
       setTest(true);
     }
   }, [user, setFormData]);
-  console.log(formState);
+
   const warningButtonHandler = (e) => {
     e.preventDefault();
     setRemoveWarning(true);
   };
-  
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(formState);
+    if (formState.inputs.newPassword.value !== formState.inputs.renewPassword.value) {
+      setAlert("Passwords do not match", "danger");
+    }
+  }
+
   return (
     <div className="Editprofile">
       {test && (
@@ -100,7 +116,7 @@ const Editprofile = ({ auth: { user }}) => {
             </button>
           </div>
           <div>
-            <form className="Edit-profile-form">
+            <form className="Edit-profile-form" onSubmit={onSubmitHandler}>
               {removeWarning ? (
                 <div></div>
               ) : (
@@ -127,6 +143,7 @@ const Editprofile = ({ auth: { user }}) => {
                   validators={[VALIDATOR_REQUIRE()]}
                   onInput={inputHandler}
                   initialValue={formState.inputs.name.value}
+                  initialValid={formState.inputs.name.isValid}
                 />
                 <Input
                   id="username"
@@ -137,6 +154,7 @@ const Editprofile = ({ auth: { user }}) => {
                   validators={[VALIDATOR_REQUIRE()]}
                   onInput={inputHandler}
                   initialValue={formState.inputs.username.value}
+                  initialValid={formState.inputs.username.isValid}
                 />
               </div>
               <div className="form-row-2">
@@ -149,38 +167,55 @@ const Editprofile = ({ auth: { user }}) => {
                   validators={[VALIDATOR_EMAIL()]}
                   onInput={inputHandler}
                   initialValue={formState.inputs.email.value}
+                  initialValid={formState.inputs.email.isValid}
                 />
               </div>
               <div className="form-row-3">
                 <Input
                   id="newPassword"
                   type="text"
-                  isEdit={true}
                   element="input"
                   label="New Password"
+                  validators={[
+                    VALIDATOR_EITHER(0, 6),
+                    // VALIDATOR_MATCH(formState.inputs.renewPassword.value),
+                  ]}
+                  errorText="New Password need a minimum 6 characters."
                   onInput={inputHandler}
+                  initialValue={formState.inputs.newPassword.value}
+                  initialValid={formState.inputs.newPassword.isValid}
                 />
                 <Input
                   id="renewPassword"
                   type="text"
-                  isEdit={true}
                   element="input"
                   label="Retype New Password"
+                  validators={[
+                    VALIDATOR_MATCH(formState.inputs.newPassword.value),
+                  ]}
                   onInput={inputHandler}
+                  pattern={formState.inputs.newPassword.value}
+                  errorText="Password does not match."
+                  initialValue={formState.inputs.renewPassword.value}
+                  initialValid={formState.inputs.renewPassword.isValid}
                 />
               </div>
               <div className="form-row-4">
                 <Input
                   id="currPassword"
                   isEdit={true}
-                  type="text"
+                  type="password"
                   element="input"
                   label="Current Password*"
-                  validators={[VALIDATOR_REQUIRE()]}
+                  validators={[VALIDATOR_MINLENGTH(6)]}
                   onInput={inputHandler}
+                  initialValue={formState.inputs.currPassword.value}
+                  initialValid={formState.inputs.currPassword.isValid}
                 />
               </div>
-              <Button register>UPDATE</Button>
+              <Button register disabled={!formState.isValid}>
+                UPDATE
+              </Button>
             </form>
           </div>
         </div>
