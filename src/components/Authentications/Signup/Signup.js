@@ -10,7 +10,7 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MATCH
 } from "../../../util/validators";
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from "../../../actions/alert";
 import { register } from "../../../actions/auth";
@@ -116,7 +116,7 @@ const Signup = ({setAlert, register, isAuthenticated, handleChange}) => {
           onInput={inputHandler}
         />
         <Button type="submit" size={25} disabled={!formState.isValid}>
-          LOG IN
+          SIGN UP
         </Button>
       </form>
       <button

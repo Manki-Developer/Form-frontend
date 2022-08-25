@@ -23,7 +23,10 @@ function authReducer(state = initialState, action) {
             ...state,
             isAuthenticated: true,
             loading: false,
-            user: payload
+            user: payload,
+            username: payload.username,
+            email: payload.email,
+            name: payload.name,
         };
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:

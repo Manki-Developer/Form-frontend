@@ -6,6 +6,8 @@ const VALIDATOR_TYPE_MAX = "MAX";
 const VALIDATOR_TYPE_EMAIL = "EMAIL";
 const VALIDATOR_TYPE_FILE = "FILE";
 const VALIDATOR_TYPE_MATCH = "MATCH";
+const VALIDATOR_TYPE_REMATCH = "REMATCH";
+const VALIDATOR_TYPE_EITHER = "EITHER";
 
 export const VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
 export const VALIDATOR_FILE = () => ({ type: VALIDATOR_TYPE_FILE });
@@ -22,6 +24,11 @@ export const VALIDATOR_MAX = (val) => ({ type: VALIDATOR_TYPE_MAX, val: val });
 export const VALIDATOR_EMAIL = () => ({ type: VALIDATOR_TYPE_EMAIL });
 
 export const VALIDATOR_MATCH = (val) => ({ type: VALIDATOR_TYPE_MATCH, val: val });
+export const VALIDATOR_REMATCH = (val) => ({
+  type: VALIDATOR_TYPE_REMATCH,
+  val: val,
+});
+export const VALIDATOR_EITHER = (val1, val2) => ({ type: VALIDATOR_TYPE_EITHER, val: {val1, val2} });
 
 export const validate = (value, validators) => {
   let isValid = true;
@@ -45,7 +52,17 @@ export const validate = (value, validators) => {
       isValid = isValid && /^\S+@\S+\.\S+$/.test(value);
     }
     if(validator.type === VALIDATOR_TYPE_MATCH){
-      isValid = isValid && (value === validator.val);
+      isValid = isValid && (value === validator.val || validator.val === "");
+    }
+    if(validator.type === VALIDATOR_TYPE_REMATCH){
+      isValid =
+        isValid && (validator.val.trim().length !== 0 && value === validator.val);
+    }
+    if(validator.type === VALIDATOR_TYPE_EITHER){
+      isValid =
+        isValid &&
+        (value.trim().length >= validator.val.val2 ||
+          +value === validator.val.val1);
     }
   }
   return isValid;

@@ -14,7 +14,7 @@ import { logout } from "../../../actions/auth";
 
 import "./MainNavigation.css";
 
-function MainNavigation({ auth: { isAuthenticated }, logout }) {
+function MainNavigation({ auth: { isAuthenticated, username}, logout }) {
   //This is the Navigation on the left, to add create an object:
   //[{path: "path to link", title: "the name of navigation"}]
   const Navigation_link_left = [{ path: "/dashboard", title: "Home" }];
@@ -22,6 +22,8 @@ function MainNavigation({ auth: { isAuthenticated }, logout }) {
   //This is the Navigation on the left, to add create an object:
   //[{path: "path to link", title: "the name of navigation"}]
   const Navigation_link_right = [{ path: "/user/login", title: "Login" }];
+
+  // console.log(user);
 
   const [dropdownOpen, setOpen] = useState(false);
   
@@ -53,15 +55,21 @@ function MainNavigation({ auth: { isAuthenticated }, logout }) {
             }}
             isOpen={dropdownOpen}
           >
-            <DropdownToggle tag="a" className="nav-link"><DehazeIcon sx={{color: "black"}}></DehazeIcon></DropdownToggle>
+            <DropdownToggle tag="a" className="nav-link">
+              <DehazeIcon sx={{ color: "black" }}></DehazeIcon>
+            </DropdownToggle>
             <DropdownMenu end>
               {/* <DropdownItem header>Numeric Characters</DropdownItem> */}
-              <Link to="/profile/0"><DropdownItem>My Profile</DropdownItem></Link>
-              <Link to="/edit-profile/0"><DropdownItem>Edit Profile</DropdownItem></Link>
+              <Link to={`/profile/${username}`}>
+                <DropdownItem>My Profile</DropdownItem>
+              </Link>
+              <Link to={`/edit-profile/${username}`}>
+                <DropdownItem>Edit Profile</DropdownItem>
+              </Link>
               <DropdownItem divider />
               <DropdownItem>
                 <a onClick={logout} href="#!">
-                    Logout
+                  Logout
                 </a>
               </DropdownItem>
             </DropdownMenu>

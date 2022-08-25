@@ -12,7 +12,7 @@ import "./Thread.css";
 const Thread = ({
   deletePost,
   auth,
-  post: { _id, title, description, createdAt, comments, creatorName, creatorUsername, creator },
+  post: { _id, title, description, createdAt, comments, creatorName, creatorUsername, creatorImage, creator },
 }) => {
   return (
     <div className="Thread-main">
@@ -21,7 +21,7 @@ const Thread = ({
         <Link to={`/profile/${creatorUsername}`} className="profile-info">
           <img
             className="profile-info-picture"
-            src="https://pbs.twimg.com/profile_images/1366466342354751491/JyhZpbtu_400x400.jpg"
+            src={`http://localhost:5000/${creatorImage}`}
             alt="test"
           />
 
