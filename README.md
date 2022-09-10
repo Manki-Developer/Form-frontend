@@ -1,6 +1,6 @@
 ![](image/form_1.PNG)
-<img alt="pic2" width="470" src="image/form_2.PNG" style="padding-right:10px;"/>
-<img alt="pic3" width="470" src="image/form_3.PNG" style="padding-right:10px;"/>
+<img alt="pic2" width="400" src="image/form_2.PNG" style="padding-right:10px;"/>
+<img alt="pic3" width="400" src="image/form_3.PNG" style="padding-right:10px;"/>
 ![](image/form_4.PNG)
 
 # Getting Started with Create React App
