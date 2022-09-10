@@ -68,9 +68,7 @@ function MainNavigation({ auth: { isAuthenticated, username}, logout }) {
               </Link>
               <DropdownItem divider />
               <DropdownItem>
-                <a onClick={logout} href="#!">
-                  Logout
-                </a>
+                <button onClick={logout}>Logout</button>
               </DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>

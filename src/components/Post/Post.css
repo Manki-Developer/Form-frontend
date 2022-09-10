@@ -21,7 +21,8 @@
 }
 
 .post-profile{
-    padding: 5px;
+    margin-left: 15px;
+    padding: 15px;
 }
 
 .fa, .fab, .fal, .far, .fas {
@@ -71,10 +72,6 @@
     text-align: center;
 }
 
-.post img {
-    width: 150px;
-}
-
 .post .comment-count {
     background: var(--light-color);
     color: var(--primary-color);
@@ -102,6 +99,18 @@ a {
     text-decoration: none;
 }
 
-.round-img {
+.image-container{
+    
+}
+
+.round-img2 {
+    height: 100px;
+    width: 100px;
     border-radius: 50%;
+}
+
+.profile-information-comment{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

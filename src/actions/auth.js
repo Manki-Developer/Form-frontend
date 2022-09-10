@@ -7,7 +7,9 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT
+  LOGOUT,
+  UPDATE_USER,
+  UPDATE_ERROR,
 } from './type';
 
 // Load User
@@ -74,6 +76,24 @@ export const login = (email, password) => async (dispatch) => {
     });
   }
 };
+
+export const updateProfile = (formData) => async (dispatch) => {
+  try{
+    const res = await api.put('/users/update', formData);
+
+    dispatch({
+      type: UPDATE_USER,
+      payload: res.data,
+    })
+    
+    window.location.reload(false);
+  }catch(err){
+    dispatch({
+      type: UPDATE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+}
 
 // Logout
 export const logout = () => ({ type: LOGOUT });

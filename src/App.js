@@ -49,11 +49,11 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <MainNavigation />
-        <Alert />
         <main>
+          <Alert />
           <Routes>
-            {ROUTE_TO_PAGES.map(({path, Element}, index) => {
-              return (<Route path={path} element={Element} key={index} />);
+            {ROUTE_TO_PAGES.map(({ path, Element }, index) => {
+              return <Route path={path} element={Element} key={index} />;
             })}
           </Routes>
         </main>

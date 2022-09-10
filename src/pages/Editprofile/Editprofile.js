@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import EditIcon from "@mui/icons-material/Edit";
 import Input from '../../components/FormElements/Input/Input';
 import Button from '../../components/FormElements/Button/Button';
@@ -7,19 +7,23 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useForm } from '../../hooks/form-hook';
 import { setAlert } from '../../actions/alert';
+import { updateProfile } from '../../actions/auth';
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_EITHER,
-  VALIDATOR_MATCH,
-  VALIDATOR_REMATCH,
 } from "../../util/validators";
 import "./Editprofile.css";
 
-const Editprofile = ({ auth: { user }}) => {
+const Editprofile = ({ auth: { user }, setAlert, updateProfile}) => {
   const [removeWarning, setRemoveWarning] = useState(false);
   const [test, setTest] = useState(false);
+  const [file, setFile] = useState();
+  const [previewUrl, setPreviewUrl] = useState();
+  const [isValid, setIsValid] = useState();
+  const filePickerRef = useRef();
+
   const [formState, inputHandler, setFormData] = useForm(
     {
       name: {
@@ -46,12 +50,46 @@ const Editprofile = ({ auth: { user }}) => {
         value: "",
         isValid: false,
       },
+      image: {
+        value: "",
+        isValid: false,
+      },
     },
     false
   );
 
   useEffect(() => {
-    if(user){
+    if(!file){
+      return;
+    }
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewUrl(fileReader.result);
+    };
+    fileReader.readAsDataURL(file);
+  }, [file]);
+
+  function pickedHandler(event) {
+    let pickedFile;
+    let fileIsValid = isValid;
+    if (event.target.files && event.target.files.length === 1) {
+      pickedFile = event.target.files[0];
+      setFile(pickedFile);
+      setIsValid(true);
+      fileIsValid = true;
+    } else {
+      setIsValid(false);
+      fileIsValid = false;
+    }
+    inputHandler("image", pickedFile, fileIsValid);
+  }
+  
+  function pickImageHandler() {
+    filePickerRef.current.click();
+  }
+
+  useEffect(() => {
+    if (user) {
       setFormData(
         {
           name: {
@@ -78,12 +116,18 @@ const Editprofile = ({ auth: { user }}) => {
             value: "",
             isValid: true,
           },
+          image: {
+            value: "",
+            isValid: true,
+          }
         },
         false
       );
       setTest(true);
     }
   }, [user, setFormData]);
+
+  //route : http://localhost:5000/api/users/update
 
   const warningButtonHandler = (e) => {
     e.preventDefault();
@@ -92,23 +136,55 @@ const Editprofile = ({ auth: { user }}) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(formState);
-    if (formState.inputs.newPassword.value !== formState.inputs.renewPassword.value) {
-      setAlert("Passwords do not match", "danger");
+    if (
+      formState.inputs.newPassword.value !==
+      formState.inputs.renewPassword.value
+    ) {
+      setAlert("Passwords do not match", "danger")
+    }else{
+      const formData = new FormData();
+      formData.append("name", formState.inputs.name.value);
+      formData.append("email", formState.inputs.email.value);
+      formData.append("username", formState.inputs.username.value);
+      formData.append("password", formState.inputs.currPassword.value);
+      if(formState.inputs.image.value !== ""){
+        formData.append("image", formState.inputs.image.value);
+      }
+      if (formState.inputs.newPassword.value.length >= 6){
+        formData.append("newpassword", formState.inputs.newPassword.value);
+      }
+      updateProfile(formData);
     }
-  }
+  };
 
   return (
     <div className="Editprofile">
       {test && (
         <div className="Editprofile-container">
           <div className="Editprofile-picture">
-            <button className="Editprofile-button">
-              <img
-                className="profile-picture round-img my-1"
-                src={`http://localhost:5000/${user.image}`}
-                alt=""
-              />
+            <input
+              id={formState.id}
+              ref={filePickerRef}
+              style={{ display: "none" }}
+              type="file"
+              accept=".jpg,.png,.jpeg"
+              onChange={pickedHandler}
+            />
+            <button className="Editprofile-button" onClick={pickImageHandler}>
+              {previewUrl && (
+                <img
+                  className="profile-picture round-img my-1"
+                  src={previewUrl}
+                  alt=""
+                />
+              )}
+              {!previewUrl && (
+                <img
+                  className="profile-picture round-img my-1"
+                  src={`http://localhost:5000/${user.image}`}
+                  alt=""
+                />
+              )}
               <EditIcon
                 sx={{ color: "black", fontSize: 40 }}
                 className="editIcon"
@@ -173,7 +249,7 @@ const Editprofile = ({ auth: { user }}) => {
               <div className="form-row-3">
                 <Input
                   id="newPassword"
-                  type="text"
+                  type="password"
                   element="input"
                   label="New Password"
                   validators={[
@@ -187,12 +263,10 @@ const Editprofile = ({ auth: { user }}) => {
                 />
                 <Input
                   id="renewPassword"
-                  type="text"
+                  type="password"
                   element="input"
                   label="Retype New Password"
-                  validators={[
-                    VALIDATOR_MATCH(formState.inputs.newPassword.value),
-                  ]}
+                  validators={[VALIDATOR_EITHER(0, 6)]}
                   onInput={inputHandler}
                   pattern={formState.inputs.newPassword.value}
                   errorText="Password does not match."
@@ -226,10 +300,14 @@ const Editprofile = ({ auth: { user }}) => {
 
 Editprofile.propTypes = {
   auth: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  updateProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(Editprofile);
+export default connect(mapStateToProps, { updateProfile, setAlert })(
+  Editprofile
+);

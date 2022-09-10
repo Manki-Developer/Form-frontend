@@ -17,3 +17,7 @@ export const ADD_POST = 'ADD_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 export const GET_POST_USERNAME = 'GET_POST_USERNAME';
+export const  GET_USER_BY_USERNAME = ' GET_USER_BY_USERNAME';
+export const UPDATE_USER = "UPDATE_USER";
+export const UPDATE_ERROR = "UPDATE_ERROR";
+export const GET_COMMENT_POST = "GET_COMMENT_POST";

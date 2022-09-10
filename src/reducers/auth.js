@@ -4,14 +4,17 @@ import {
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGOUT,
-    ACCOUNT_DELETED
+    ACCOUNT_DELETED,
+    UPDATE_USER,
+    UPDATE_ERROR,
 } from '../actions/type';
   
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     loading: true,
-    user: null
+    user: null,
+    error: {},
 };
   
 function authReducer(state = initialState, action) {
@@ -20,13 +23,13 @@ function authReducer(state = initialState, action) {
     switch (type) {
         case USER_LOADED:
         return {
-            ...state,
-            isAuthenticated: true,
-            loading: false,
-            user: payload,
-            username: payload.username,
-            email: payload.email,
-            name: payload.name,
+          ...state,
+          isAuthenticated: true,
+          loading: false,
+          user: payload,
+          username: payload.username,
+          email: payload.email,
+          name: payload.name,
         };
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
@@ -35,6 +38,18 @@ function authReducer(state = initialState, action) {
             ...payload,
             isAuthenticated: true,
             loading: false
+        };
+        case UPDATE_USER:
+        return{
+            ...state,
+            user: payload,
+            loading:false,
+        }
+        case UPDATE_ERROR:
+        return {
+            ...state,
+            error: payload,
+            loading: false,
         };
         case ACCOUNT_DELETED:
         case AUTH_ERROR:

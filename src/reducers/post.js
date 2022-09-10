@@ -1,24 +1,27 @@
 import {
-    GET_POST,
-    POST_ERROR,
-    UPDATE_LIKES,
-    DELETE_POST,
-    ADD_POST,
-    GET_POSTS,
-    ADD_COMMENT, 
-    REMOVE_COMMENT,
-    GET_POST_USERNAME,
-} from '../actions/type';
+  GET_POST,
+  POST_ERROR,
+  UPDATE_LIKES,
+  DELETE_POST,
+  ADD_POST,
+  GET_POSTS,
+  ADD_COMMENT,
+  REMOVE_COMMENT,
+  GET_POST_USERNAME,
+  GET_USER_BY_USERNAME,
+  GET_COMMENT_POST,
+} from "../actions/type";
 
 const initialState = {
     posts: [],
     post: [],
     likes: [],
     dislikes: [],
-    postUsername:[],
+    postUsername: [],
     comments: [],
     loading: true,
-  error: {},
+    user_post: [],
+    error: {},
 };
 
 function postReducer(state = initialState, action) {
@@ -35,16 +38,27 @@ function postReducer(state = initialState, action) {
         return {
             ...state,
             post: payload,
-            comments: payload.comments,
             likes: payload.like,
             dislikes: payload.dislike,
             loading: false
         };
+        case GET_COMMENT_POST:
+        return{
+            ...state,
+            comments: payload,
+            loading: false,
+        }
         case GET_POST_USERNAME:
         return {
             ...state,
             postUsername: payload,
             loading: false
+        };
+        case GET_USER_BY_USERNAME:
+        return {
+          ...state,
+          user_post: payload,
+          loading: false,
         };
         case ADD_POST:
         return {
@@ -67,9 +81,6 @@ function postReducer(state = initialState, action) {
         case UPDATE_LIKES:
         return {
           ...state,
-          // posts: state.posts.map((post) =>
-          // post._id === payload.id ? { ...post, likes: payload.likes } : post
-          // ),
           likes:payload.like,
           dislikes: payload.dislike,
           loading: false,
