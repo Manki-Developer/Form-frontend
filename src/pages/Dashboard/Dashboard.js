@@ -19,7 +19,6 @@ const Dashboard = ({ getPosts, addPost, post: { posts }, isAuthenticated }) => {
   }, [getPosts]);
 
   const [openForm, setOpenForm] = useState(false);
-  // let isLogin = true;
 
   const [formState, inputHandler] = useForm(
     {

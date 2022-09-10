@@ -12,6 +12,11 @@
     padding: 20px 100px;
 }
 
+.round-img{
+    width: 250px;
+    height: 250px;
+}
+
 .my-1 {
     margin: 1rem 0;
 }

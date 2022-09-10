@@ -2,25 +2,31 @@ import react from "react";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ClearIcon from "@mui/icons-material/Clear";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./Post.css";
 
 const Post = ({
   auth,
-  comment: {text, creatorName, createdAt},
+  comment: {text, creatorName, createdAt, creatorUsername, creatorImage},
 }) => {
   return (
     <div className="post bg-white p-1 my-1">
       <div className="post-profile">
-        <a href="profile.html">
-          <img
-            className="round-img"
-            src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
-            alt=""
-          />
+        <Link
+          to={`/profile/${creatorUsername}`}
+          className="profile-information-comment"
+        >
+          <div className="image-container">
+            <img
+              className="round-img2"
+              src={`http://localhost:5000/${creatorImage}`}
+              alt=""
+            />
+          </div>
           <h3>{creatorName}</h3>
-        </a>
+        </Link>
       </div>
       <div>
         <p className="my-1">{text}</p>

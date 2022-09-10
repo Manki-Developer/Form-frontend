@@ -6,20 +6,21 @@ import { Link, useParams } from "react-router-dom";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import "./ProfilePage.css";
-import {getPostByUsername } from '../../actions/post';
+import {getPostByUsername, getUserByUsername} from '../../actions/post';
 import Thread from '../../components/Thread/Thread';
 
-const Profile = ({getPostByUsername, post:{postUsername}}) => {
+const Profile = ({
+  getPostByUsername,
+  getUserByUsername,
+  post: { postUsername, user_post },
+}) => {
+  const { userId } = useParams();
+  useEffect(() => {
+    getPostByUsername(userId);
+    getUserByUsername(userId);
+  }, [userId, getPostByUsername, getUserByUsername]);
 
-  const {userId} = useParams();
-    useEffect(() => {
-      getPostByUsername(userId);
-    }, [getPostByUsername, userId]);
-
-  console.log(userId);
-
-  console.log(postUsername);
-
+  console.log(user_post);
   return (
     <div className="profile">
       <div className="profile-top bg-primary p-2">
@@ -31,29 +32,34 @@ const Profile = ({getPostByUsername, post:{postUsername}}) => {
         </Link>
         <img
           className="round-img my-1"
-          src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+          src={`http://localhost:5000/${user_post.image}`}
           alt=""
         />
-        <h1 className="large">John Doe</h1>
+        <h1 className="large">{user_post.name}</h1>
         <div className="profile-usertag">
           <PersonIcon></PersonIcon>
-          <p>User Tag</p>
+          <p>{user_post.username}</p>
         </div>
-        <p className="lead">Member since {2019}</p>
+        <p className="lead">
+          Member since {new Date(user_post.createdAt).getFullYear()}
+        </p>
         <div className="profile-number-post">
           <ChatBubbleIcon></ChatBubbleIcon>
-          <p>2 posts</p>
+          <p>{postUsername.length} post</p>
         </div>
       </div>
       <div className="post-container">
-        {postUsername.map(post => <Thread key={post._id} post={post} />)}
+        {postUsername.map((post) => (
+          <Thread key={post._id} post={post} />
+        ))}
       </div>
     </div>
   );
-}
+};
 
 Profile.propTypes = {
   getPostByUsername: PropTypes.func.isRequired,
+  getUserByUsername: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired
 };
 
@@ -61,4 +67,4 @@ const mapStateToProps = (state) => ({
   post: state.post
 });
 
-export default connect(mapStateToProps, { getPostByUsername })(Profile);
+export default connect(mapStateToProps, { getPostByUsername, getUserByUsername })(Profile);

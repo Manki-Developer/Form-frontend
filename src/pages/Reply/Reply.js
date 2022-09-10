@@ -14,13 +14,16 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
   getPost,
-  addComment,deletePost,
+  addComment,
+  deletePost,
   toggleLike,
   toggleDislike,
+  getCommentByPost
 } from "../../actions/post";
 
 const Reply = ({
   getPost,
+  getCommentByPost,
   post: { post, comments, likes, dislikes, loading },
   addComment,
   toggleLike,
@@ -32,11 +35,9 @@ const Reply = ({
     const { threadId } = useParams();
     const navigate = useNavigate();
     useEffect(() => {
-        getPost(threadId);
-    }, [getPost, threadId]);
-
-  // console.log(post);
-  // console.log(threadId);
+      getPost(threadId);
+      getCommentByPost(threadId);
+    }, [getPost, getCommentByPost, threadId]);
 
   const [formState, inputHandler] = useForm(
     {
@@ -76,10 +77,10 @@ const Reply = ({
         <div className="post-section">
           <div className="post-main">
             <div>
-              <Link to={`/profile/${0}`} className="profile-information">
+              <Link to={`/profile/${post.creatorUsername}`} className="profile-information">
                 <img
                   className="profile-picture"
-                  src="https://pbs.twimg.com/profile_images/1366466342354751491/JyhZpbtu_400x400.jpg"
+                  src={`http://localhost:5000/${post.creatorImage}`}
                   alt="test"
                 />
                 <div>
@@ -169,7 +170,8 @@ Reply.propTypes = {
   toggleLike: PropTypes.func.isRequired,
   toggleDislike: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
-  deletePost: PropTypes.func.isRequired
+  deletePost: PropTypes.func.isRequired,
+  getCommentByPost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -181,6 +183,7 @@ export default connect(mapStateToProps, {
   getPost,
   addComment, 
   deletePost,
+  getCommentByPost,
   toggleLike,
   toggleDislike,
 })(Reply);
